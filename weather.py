@@ -25,7 +25,7 @@ def get_conditions(api_key, city, days):
         response_forecast = requests.get(url_forecast)
         response_forecast.raise_for_status()
 
-        data_forecast = response_forecast.json(ensure_ascii=False)
+        data_forecast = response_forecast.json()
 
         if not data_forecast.get("DailyForecasts"):
             raise ValueError("Invalid data received from API.")

@@ -33,6 +33,7 @@ def index():
             if isinstance(response, str) and response.startswith("Request error"):
                 return jsonify({"error": response}), 400
             elif isinstance(response, str):
+                print(response)
                 return jsonify({"error": "An unexpected error occurred while fetching weather data."}), 500
             
             weather_data[city] = response
