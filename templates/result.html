@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #333;
+            margin-top: 20px;
+        }
+        pre {
+            background-color: #ffffff;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 15px;
+            overflow: auto;
+            white-space: pre-wrap; /* Позволяет переносить длинные строки */
+            word-wrap: break-word; /* Переносит слова, если они слишком длинные */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3; /* Цвет кнопки при наведении */
+        }
+        a {
+            text-decoration: none; /* Убираем подчеркивание у ссылки */
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Forecast</h1>
+
+    {% if weather_summary %}
+        <h2>Погодные условия на 1 день:</h2>
+        <pre>
+        {% for summary in weather_summary %}
+            {{ summary }}
+        {% endfor %}
+        </pre>
+    {% else %}
+        {% for graph in graphs %}
+            <div id="temp-graph-{{ loop.index }}" style="width: 100%; height: 400px;"></div>
+            <script>
+                var tempGraph = {{ graph.temp_graph | safe }};
+                Plotly.newPlot('temp-graph-{{ loop.index }}', tempGraph.data, tempGraph.layout);
+            </script>
+
+            <div id="wind-graph-{{ loop.index }}" style="width: 100%; height: 400px;"></div>
+            <script>
+                var windGraph = {{ graph.wind_graph | safe }};
+                Plotly.newPlot('wind-graph-{{ loop.index }}', windGraph.data, windGraph.layout);
+            </script>
+
+            <div id="precip-graph-{{ loop.index }}" style="width: 100%; height: 400px;"></div>
+            <script>
+                var precipGraph = {{ graph.precip_graph | safe }};
+                Plotly.newPlot('precip-graph-{{ loop.index }}', precipGraph.data, precipGraph.layout);
+            </script>
+        {% endfor %}
+    {% endif %}
+
+    <br>
+    <a href="/">
+        <button>Вернуться к форме</button>
+    </a>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма города</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            flex-direction: column; /* Изменено для вертикального расположения */
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .header {
+            background-color: #007bff; /* Цвет фона шапки */
+            color: white; /* Цвет текста */
+            padding: 15px 20px; /* Отступы */
+            width: 100%; /* Ширина на всю страницу */
+            text-align: center; /* Центрирование текста */
+            font-size: 24px; /* Размер шрифта */
+            border-bottom: 2px solid #0056b3; /* Нижняя граница для акцента */
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            margin-top: 20px; /* Отступ сверху для формы */
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"] {
+            width: calc(100% - 12px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            transition: border-color 0.3s ease-in-out;
+        }
+        input[type="text"]:focus {
+            border-color: #80bdff; /* Цвет рамки при фокусе */
+            outline: none; /* Убираем стандартное выделение */
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff; /* Основной цвет кнопки */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px; /* Размер шрифта */
+            transition: background-color 0.3s ease-in-out; /* Плавный переход цвета */
+            margin-top: 15px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* Цвет кнопки при наведении */
+        }
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #f8f9fa; /* Цвет фона для текстового окна */
+            border-left: 5px solid #007bff; /* Левый бордер для акцента */
+        }
+        label {
+            margin-top: 10px
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            transition: border-color 0.3s ease-in-out;
+        }
+        select:focus {
+            border-color: #80bdff; /* Цвет рамки при фокусе */
+            outline: none; /* Убираем стандартное выделение */
+        }
+    </style>
+    <script>
+        function addCityInput() {
+            var container = document.getElementById('city-inputs');
+            var newInput = document.createElement('div');
+            newInput.innerHTML = `
+                <label for="additional-city-input">Дополнительный город:</label>
+                <input type="text" name="additional_city" required>
+            `;
+            container.appendChild(newInput);
+        }
+
+        function removeLastCityInput() {
+            var container = document.getElementById('city-inputs');
+            var inputs = container.getElementsByTagName('div');
+            if (inputs.length > 0) { // Убедимся, что есть что удалять (оставляем хотя бы одно поле)
+                container.removeChild(inputs[inputs.length - 1]);
+            }
+        }
+
+    </script>
+</head>
+<body>
+
+<div class="header">
+    WeatherApp
+</div>
+
+<div class="form-container">
+    <h2>Введите название города</h2>
+    <form action="/" method="post">
+        <div id="city-inputs">
+            <label for="city">Город:</label>
+            <input type="text" id="city" name="city" required>
+        </div>
+
+        <button type="button" onclick="addCityInput()">+</button>
+        <button type="button" onclick="removeLastCityInput()">-</button>
+        <label for="days">Кол-во дней:</label>
+        <select id="days" name="days"> <!-- Изменено с "Кол-во дней" на "days" -->
+            <option value="1">1 день</option>
+            <option value="5">5 дня</option>
+            <option value="10">10 дней</option>
+        </select>
+        <input type="submit" value="Получить прогноз">
+
+<!-- <div class="output">
+    <strong>Введенные данные:</strong><br>
+    Температура: {{ temp }}<br>
+    Скорость ветра: {{ wind }}<br>
+    Влажность: {{ humidity }}<br>
+    Вероятность дождя днем: {{ rain_prob_day }}<br>
+    Вероятность дождя ночью: {{ rain_prob_night }}<br>
+    Благоприятность: {{ favorability }}
+</div> -->   
+       
